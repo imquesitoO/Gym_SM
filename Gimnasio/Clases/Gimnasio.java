@@ -7,7 +7,6 @@ package gimnasio;
 public class Gimnasio {
     private Estudiante[] estudiantes;
     private Entrenador[] entrenadores;
-    private Membresia[] membresias;
   
     public Gimnasio(int maxEstudiantes, int maxEntrenadores, int maxMembresias, int maxRutinas) {
         this.estudiantes = new Estudiante[maxEstudiantes];
@@ -24,24 +23,6 @@ public class Gimnasio {
         }
     }
 
-    public void agregarEntrenador(Entrenador entrenador) {
-        for (int i = 0; i < entrenadores.length; i++) {
-            if (entrenadores[i] == null) {
-                entrenadores[i] = entrenador;
-                break;
-            }
-        }
-    }
-
-    public void agregarMembresia(Membresia membresia) {
-        for (int i = 0; i < membresias.length; i++) {
-            if (membresias[i] == null) {
-                membresias[i] = membresia;
-                break;
-            }
-        }
-    }
-
     public Estudiante[] getEstudiantes() {
         return estudiantes;
     }
@@ -49,9 +30,32 @@ public class Gimnasio {
     public Entrenador[] getEntrenadores() {
         return entrenadores;
     }
+    class Gimnasio {
+    private Entrenador[] entrenadores;
+    private Alumno[] alumnos;
 
-    public Membresia[] getMembresias() {
-        return membresias;
+    // Constructor
+    public Gimnasio(Entrenador[] entrenadores, Alumno[] alumnos) {
+        this.entrenadores = entrenadores;
+        this.alumnos = alumnos;
     }
 
+    public void mostrarAlumno(String codigo) {
+        for (Alumno alumno : alumnos) {
+            String id = codigo;
+            if (id.equals(alumno.getCodigoGymrat()) || id.equals(alumno.getUsuarioGymRat())) {
+                System.out.println("\tINFORMACIÓN DEL ALUMNO");
+                alumno.mostrarInformacion(); 
+                return; 
+            }
+        }
+        System.out.println("Alumno no encontrado...");
+    }
+
+    public void mostrarEntrenadores() {
+        System.out.println("\tLISTA DE ENTRENADORES");
+        for (Entrenador entrenador : entrenadores) {
+            System.out.println("Entrenador: " + entrenador.getNombre()+entrenador.getApellidos);
+        }
+    }
 }
