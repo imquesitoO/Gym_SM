@@ -6,7 +6,8 @@ public class Main {
         Persona entrenador1 = new Entrenador("Luis Fernando", "Gomez Rivas", 98765432, 35, "Masculino", "luis_admin", "strongPass2024");
         Persona entrenador2 = new Entrenador("Carlos Alberto", "Sanchez Torres", 12349876, 42, "Masculino", "carlos_trainer", "trainStrong2024");
         Persona administrador = new Administrador("AdministradorSM","adminPass2024");
-
+        Persona[] gymPersonas = new Gymrat[100];
+        
         int opc;
         opc = Menu_1();
         
