@@ -1,21 +1,27 @@
-package gimnasio;
-
 public class Entrenador extends Persona {
-    private String especialidad;
+    private String usuarioEntrenador;
+    private String contraseniaEntrenador;
 
-
-    public Entrenador(String nombres, String apellidos, long dni, int edad, String genero, String especialidad) {
+    public Entrenador(String nombres, String apellidos, long dni, int edad, String genero, String usuarioEntrenador, String contraseniaEntrenador) {
         super(nombres, apellidos, dni, edad, genero);
-        this.especialidad = especialidad;
+        this.usuarioEntrenador = usuarioEntrenador;
+        this.contraseniaEntrenador = contraseniaEntrenador;
+    }
+    
+    public String getUsuarioEntrenador() {
+        return usuarioEntrenador;
     }
 
-
-    public String getEspecialidad() {
-        return especialidad;
+    public void setUsuarioEntrenador(String usuarioEntrenador) {
+        this.usuarioEntrenador = usuarioEntrenador;
     }
 
-
-    public void setEspecialidad(String especialidad) {
-        this.especialidad = especialidad;
+    public String getContraseniaEntrenador() {
+        return contraseniaEntrenador;
     }
+
+    public void setContraseniaEntrenador(String contraseniaEntrenador) {
+        this.contraseniaEntrenador = contraseniaEntrenador;
+    }
+    
 }
