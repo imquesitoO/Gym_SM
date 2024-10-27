@@ -32,7 +32,7 @@ public class Administrador extends Persona {
     public void Mostrar_Entrenadores(){
         //mostrar todos los entrenadores
     }
-    public void Mostrar_Membresias(){
+    public void Mostrar_Subscripcion(){
         //mostrar solo alumnos con membresia premium
     }
 }
