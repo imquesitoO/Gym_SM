@@ -40,6 +40,7 @@ default void cargarEstudiantesFree(ArrayList<Estudiante> estudiantes) {
                 EstudianteFree est = (EstudianteFree) estudiante;
                 // Escribir los datos solo si no existen ya en el archivo
                 if (!existeEstudiante(est)) {  // Método para verificar si ya existe
+                     writer.newLine();
                     writer.write(est.getNombres() + "," + est.getApellidos() + "," + est.getDni() + ","
                             + est.getEdad() + "," + est.getCodigoEstudiante() + "," + est.getFacultad() + ","
                             + est.getMembresia() + "," + est.getUsuarioGym() + "," + est.getContraseniaGym());
@@ -218,6 +219,7 @@ default void cargarEstudiantesFree(ArrayList<Estudiante> estudiantes) {
                 EstudiantePremium est = (EstudiantePremium) estudiante;
                 // Escribir los datos solo si no existen ya en el archivo
                 if (!existeEstudiantePremium(est)) {  // Método para verificar si ya existe
+                     writer.newLine();
                     writer.write(est.getNombres() + "," + est.getApellidos() + "," + est.getDni() + ","
                             + est.getEdad() + "," + est.getCodigoEstudiante() + "," + est.getFacultad() + ","
                             + est.getMembresia() + "," + est.getUsuarioGym() + "," + est.getContraseniaGym());
