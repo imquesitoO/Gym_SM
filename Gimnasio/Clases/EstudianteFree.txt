@@ -1,0 +1,3 @@
+Axel_Josue,Chunga_Chevez,70768894,23,23200161,Ingenieria_de_Sistemas,GRATUITO,AxelChunga,Axel161
+Nathaly_Soledad,Yanac_Espinoza,70768895,19,23200232,Ingenieria_de_Sistemas,GRATUITO,NathalyYanac,Nathaly232
+Pieers_Fernando,Pachas_Auris,70768896,20,23200040,Ingenieria_de_Sistemas,GRATUITO,PieersPachas,Pieers40
