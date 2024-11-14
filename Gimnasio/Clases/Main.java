@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-public class Main {
+public class Main implements Manejo_Archivos{
     public static void main(String[] args) {
         Administrador administrador = new Administrador();
 
@@ -11,11 +11,14 @@ public class Main {
         
         //Estudiante[] estudiantes = new Estudiante[100];
         ArrayList<Estudiante> estudiantes = new ArrayList<>();
+        ArrayList<Estudiante> estudiantesFree = new ArrayList<>();
+        ArrayList<Estudiante> estudiantesPremium = new ArrayList<>();
+        
       
         TurnoFree.inicializarTurnos();
         TurnoPremium.inicializarTurnos();
 
-        Scanner scanner = new Scanner(System.in);
+     Scanner scanner = new Scanner(System.in);
         int opc;
         do {
             opc = Sub_menu.Menu_1();
@@ -39,7 +42,7 @@ public class Main {
                                 }
                                 case 4 -> {
                                     int pos = administrador.buscar_estudiante(estudiantes);
-                                    administrador.eliminar_estudiante(estudiantes,pos);
+                                    administrador.eliminar_estudiante(estudiantes, pos);
                                 }
                                 case 5 -> administrador.mostrar_entrenador((Entrenador[]) entrenadores);
                                 case 6 -> System.out.println("\nRegresando al menu principal...");
@@ -53,7 +56,7 @@ public class Main {
 
                 case 2 -> {
                     int intento = 3;
-                    boolean ingresado = false;
+                    boolean ingresado;
                     do {
                         ingresado = Entrenador.iniciar_sesion_entrenador(intento, (Entrenador[]) entrenadores);
                         intento--;
@@ -66,7 +69,7 @@ public class Main {
                             switch (opc2) {
                                 case 1 -> {
                                     System.out.println("Lista de Estudiantes Premium:");
-                                    entrenadores[0].mostrarEstudiante( (ArrayList<Estudiante>) estudiantes);
+                                    entrenadores[0].mostrarEstudiante((ArrayList<Estudiante>) estudiantes);
                                 }
                                 case 2 -> System.out.println("\nRegresando al menu principal...");
                                 default -> System.out.println("\n\tOpción no valida.");
@@ -76,78 +79,125 @@ public class Main {
                 }
 
                 case 3 -> {
-                    int intento = 3;
                     boolean ingresado = false;
-                    Estudiante estudianteActivo = null;
+                    int intento = 3;
+                    EstudianteFree estudianteActivo = null;
+
                     do {
-                        for (Estudiante estudiante : estudiantes) {
-                            if (estudiante instanceof EstudianteFree) {
-                                ingresado = ((EstudianteFree) estudiante).iniciar_sesion_estudiantefree(intento);
-                                if (ingresado) {
-                                    estudianteActivo = estudiante;
+                        System.out.println("\n**********************************************");
+                        System.out.println("\t\tIniciar Sesion ");
+                        System.out.print("\n\tUsuario: ");
+                        String usuario1 = scanner.nextLine();
+                        System.out.print("\n\tContrasenia: ");
+                        String contrasenia1 = scanner.nextLine();
+
+                        if (estudiantesFree.isEmpty()) {
+                            int pos = administrador.buscarEstudianteFree(estudiantesFree, usuario1, contrasenia1);
+                            if (pos != -1) {
+                                estudianteActivo = (EstudianteFree) estudiantesFree.get(pos);
+                            }
+                        } else {
+                            for (Estudiante e : estudiantesFree) {
+                                if (e instanceof EstudianteFree && e.getContraseniaGym().equals(contrasenia1) && e.getUsuarioGym().equals(usuario1)) {
+                                    estudianteActivo = (EstudianteFree) e;
                                     break;
                                 }
                             }
                         }
-                        intento--;
-                    } while (intento != 0 && !ingresado);
 
-                    if (ingresado && estudianteActivo != null) {
+                        if (estudianteActivo == null) {
+                            System.out.println("Estudiante no encontrado.");
+                            intento--;
+                            if (intento > 0) {
+                                System.out.println("Intentos restantes: " + intento);
+                            }
+                        } else {
+                            System.out.println("\nInicio de sesion exitoso.\n\n");
+                            System.out.println("\tBIENVENIDO ESTUDIANTE FREE");
+                            ingresado = true;
+                            break;
+                        }
+
+                    } while (intento > 0 && !ingresado);
+
+                    if (ingresado) {
                         int opc3;
                         do {
                             opc3 = Sub_menu.submenu_estudianteFree();
                             switch (opc3) {
-                                case 1 -> ((EstudianteFree) estudianteActivo).reservarTurno();
-                                case 2 -> ((EstudianteFree) estudianteActivo).mostrarTurno();
+                                case 1 -> estudianteActivo.reservarTurno();
+                                case 2 -> estudianteActivo.mostrarTurno();
                                 case 3 -> System.out.println("\nRegresando al menu principal...");
-                                default -> System.out.println("\n\tOpción no valida.");
+                                default -> System.out.println("\n\tOpción no válida.");
                             }
                         } while (opc3 != 3);
+                    } else {
+                        System.out.println("\nNo se pudo iniciar sesion después de varios intentos. Volviendo al menu principal.");
                     }
                 }
 
                 case 4 -> {
-                    int intento = 3;
                     boolean ingresado = false;
-                    Estudiante estudianteActivo = null;
+                    int intento = 3;
+                    EstudiantePremium estudianteActivo = null;
+
                     do {
-                        for (Estudiante estudiante : estudiantes) {
-                            if (estudiante instanceof EstudiantePremium) {
-                                ingresado = ((EstudiantePremium) estudiante).iniciar_sesion_estudiantepremium(intento);
-                                if (ingresado) {
-                                    estudianteActivo = estudiante;
+                        System.out.println("\n**********************************************");
+                        System.out.println("\t\tIniciar Sesion ");
+                        System.out.print("\n\tUsuario: ");
+                        String usuario = scanner.nextLine();
+                        System.out.print("\n\tContrasenia: ");
+                        String contrasenia = scanner.nextLine();
+
+                        if (estudiantesPremium.isEmpty()) {
+                            int pos = administrador.buscarEstudiantePremium(estudiantesPremium, usuario, contrasenia);
+                            if (pos != -1) {
+                                estudianteActivo = (EstudiantePremium) estudiantesPremium.get(pos);
+                            }
+                        } else {
+                            for (Estudiante e : estudiantesPremium) {
+                                if (e instanceof EstudiantePremium && e.getContraseniaGym().equals(contrasenia) && e.getUsuarioGym().equals(usuario)) {
+                                    estudianteActivo = (EstudiantePremium) e;
                                     break;
                                 }
                             }
                         }
-                        intento--;
-                    } while (intento != 0 && !ingresado);
 
-                    if (ingresado && estudianteActivo != null) {
-                        int opc4;
-                        do {
-                            opc4 = Sub_menu.submenu_estudiantePremium();
-                            switch (opc4) {
-                                case 1 -> ((EstudiantePremium) estudianteActivo).reservarTurno();
-                                case 2 -> ((EstudiantePremium) estudianteActivo).mostrarTurno();
-                                case 3 -> {
-                                    System.out.println("Entrenadores disponibles:");
-                                    for (Persona entrenador : entrenadores) {
-                                        System.out.println(entrenador.getNombres() + " " + entrenador.getApellidos());
-                                    }
-                                }
-                                case 4 -> System.out.println("\nRegresando al menu principal...");
-                                default -> System.out.println("\n\tOpción no valida.");
+                        if (estudianteActivo == null) {
+                            System.out.println("Estudiante Premium no encontrado.");
+                            intento--;
+                            if (intento > 0) {
+                                System.out.println("Intentos restantes: " + intento);
                             }
-                        } while (opc4 != 4);
+                        } else {
+                            System.out.println("\nInicio de sesion exitoso.");
+                            System.out.println("\n\tBIENVENIDO ESTUDIANTE PREMIUM\n");
+                            ingresado = true;
+                            break;
+                        }
+
+                    } while (intento > 0 && !ingresado);
+
+                    if (ingresado) {
+                        int opc3;
+                        do {
+                            opc3 = Sub_menu.submenu_estudiantePremium();
+                            switch (opc3) {
+                                case 1 -> estudianteActivo.reservarTurno();
+                                case 2 -> estudianteActivo.mostrarTurno();
+                                case 3 -> estudianteActivo.mostrarEntrenadores((Entrenador[]) entrenadores);
+                                case 4 -> System.out.println("\nRegresando al menu principal...");
+                                default -> System.out.println("\n\tOpción no válida.");
+                            }
+                        } while (opc3 != 4);
+                    } else {
+                        System.out.println("\nNo se pudo iniciar sesion después de varios intentos. Volviendo al menu principal.");
                     }
                 }
-
                 case 5 -> System.out.println("\nSaliendo...");
-                default -> System.out.println("\n\tOpcion no válida en el menu principal.");
+                default -> System.out.println("\n\tOpción no válida en el menu principal.");
             }
         } while (opc != 5);
-        scanner.close();
-        Sub_menu.cerrarScanner();
+            scanner.close();
     }
 }

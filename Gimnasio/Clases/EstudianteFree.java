@@ -1,3 +1,5 @@
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class EstudianteFree extends Estudiante {
@@ -25,6 +27,8 @@ public class EstudianteFree extends Estudiante {
         }
     }
 
+ 
+    
     // Método para mostrar el turno reservado
     public void mostrarTurno() {
         if (turnoReservado != null) {
@@ -33,31 +37,7 @@ public class EstudianteFree extends Estudiante {
             System.out.println("No tiene un turno reservado.");
         }
     }
-
-    // Método para iniciar sesión
-    public boolean iniciar_sesion_estudiantefree(int intento) {
-        Scanner consola = new Scanner(System.in);
-
-        System.out.println("\n**********************************************");
-        System.out.println("\t\tIniciar Sesión ");
-
-        System.out.print("\n\tUsuario: ");
-        String usuario1 = consola.nextLine();
-
-        System.out.print("\n\tContraseña: ");
-        String contrasenia1 = consola.nextLine();
-
-        if (this.usuarioGym.equals(usuario1) && this.contraseniaGym.equals(contrasenia1)) {
-            System.out.println("\nInicio de sesión exitoso.");
-            System.out.println("\tBIENVENIDO ESTUDIANTE FREE");
-            return true;
-        } else {
-            intento--;
-            System.out.println("\nUsuario y/o clave incorrectos");
-            System.out.println("Le quedan " + intento + " intentos.");
-            return false;
-        }
-    }
+    
 
     // Método para mostrar datos
     public void mostrarDatos() {

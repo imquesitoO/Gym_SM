@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.*;
 import java.io.*;
+import java.time.LocalDate;
+
 /**
  *
  * @author valer
@@ -49,7 +51,7 @@ public class Administrador implements Salida, Manejo_Archivos {
         return false; // Regresa falso si se agotan los intentos
     }
     
-    
+
     
     public void registrar_estudiante(ArrayList<Estudiante> estudiantes) {
         
@@ -130,6 +132,10 @@ public class Administrador implements Salida, Manejo_Archivos {
         apellido=quitarEspacio(apellido);
         facultad=quitarEspacio(facultad);
         
+        LocalDate fechaActual = LocalDate.now();
+        System.out.println("\nFecha actual: " + fechaActual);
+
+        
         if(membresia.equals("GRATUITO")){
             estudiantes.add(new EstudianteFree(nombre, apellido, dni, edad, codigo, facultad, membresia, usuariO, contraseniA));
             agregar_estudianteFree(estudiantes);
@@ -138,8 +144,11 @@ public class Administrador implements Salida, Manejo_Archivos {
         else{
            estudiantes.add(new EstudiantePremium(nombre, apellido, dni, edad, codigo, facultad, membresia, usuariO, contraseniA));
            agregar_estudiantePremium(estudiantes);
+           System.out.println("\nRecordar: Membresia Premium: 15 soles");
         }
-        System.out.println("\n\n\tUsuario registrado");
+
+        System.out.println("\tUsuario registrado");
+        
 }
     
         
@@ -195,6 +204,7 @@ public class Administrador implements Salida, Manejo_Archivos {
     
     
      public void actualizar_estudiante(ArrayList<Estudiante> estudiantes, int pos) {
+        int i=0;
         Scanner console = new Scanner(System.in);
         if (pos == -1 || pos >= estudiantes.size()) {
             System.out.println("Usuario no encontrado...");
@@ -239,6 +249,7 @@ public class Administrador implements Salida, Manejo_Archivos {
             case 5 -> {
             // Validación de membresía específica
              boolean membresiaValida = false;
+             String membresiaAntigua=estudiante.getMembresia();
              while (!membresiaValida) {
 
                 System.out.println("Membresía actual: " + estudiante.getMembresia());
@@ -256,6 +267,9 @@ public class Administrador implements Salida, Manejo_Archivos {
                 }
                     estudiante.setMembresia(membresia);
                     System.out.println("Membresía actualizada.");
+                    if(!membresiaAntigua.equals(estudiante.getMembresia())){
+                       i=-1; 
+                    }
         }
 
             case 6 -> {
@@ -273,17 +287,20 @@ public class Administrador implements Salida, Manejo_Archivos {
                     estudiante.getContraseniaGym()));
             actualizar_Premium(estudiantes);
             
+            if(i ==-1){eliminarEstudianteFree(estudiantes,estudiante);}
+            
         } else if (membresia.equals("GRATUITO")) {
             estudiantes.set(pos, new EstudianteFree(estudiante.getNombres(), estudiante.getApellidos(),
                     estudiante.getDni(), estudiante.getEdad(), estudiante.getCodigoEstudiante(),
                     estudiante.getFacultad(), membresia, estudiante.getUsuarioGym(),
                     estudiante.getContraseniaGym()));
+            
             actualizar_Free(estudiantes);
+            if(i ==-1){eliminarEstudiantePremium(estudiantes,estudiante);}
         }
         
         System.out.println("\n\n\tUsuario actualizado.");
-
-        mostrar_estudiante(estudiantes,pos);
+        
     }
       
           
@@ -319,6 +336,102 @@ public class Administrador implements Salida, Manejo_Archivos {
     }
 
     
+   //------------------------------------------------------------------------------------------------
+   
+    
+    public int buscarEstudianteFree(ArrayList<Estudiante> estudiantes, String usuario, String contrasenia) {
+        // Cargar los estudiantes solo una vez al principio (esto puede ser optimizado en otra parte del código si es posible)
+        if (estudiantes.isEmpty()) {
+            cargarEstudiantesFree(estudiantes); // Si no se han cargado previamente
+        }
+
+        // Si no se han cargado estudiantes o la lista sigue vacía, manejar el caso
+        if (estudiantes.isEmpty()) {
+            System.out.println("No se han cargado estudiantes.");
+            return -1;
+        }
+
+        // Buscar el estudiante por usuario y contraseña
+        for (int pos = 0; pos < estudiantes.size(); pos++) {
+            Estudiante e = estudiantes.get(pos);
+
+            // Verificar si el estudiante es una instancia de EstudianteFree y si coincide el usuario y la contraseña
+            if (e instanceof EstudianteFree) {
+                EstudianteFree estudianteFree = (EstudianteFree) e;
+                if (estudianteFree.getUsuarioGym().equals(usuario)){ 
+                    if(estudianteFree.getContraseniaGym().equals(contrasenia)) {
+                    return pos; // Retorna la posición del estudiante si se encuentra
+                    }
+                }
+            }
+        }
+
+        // Si no se encuentra el estudiante
+        System.out.println("No se encontró ningún estudiante con el usuario o la contrasenia proporcionados.");
+        return -1;
+    }
+    
+
+   /* public int buscarEstudiantePremium(ArrayList<Estudiante> estudiantesPremium, String usuario, String contrasenia) {
+        
+      // Cargar los estudiantes solo una vez al principio
+        if (estudiantesPremium.isEmpty()) {
+            cargarEstudiantesPremium(estudiantesPremium); // Cargar si la lista está vacía
+        }
+
+        // Comprobar si la lista sigue vacía después de intentar cargar los datos
+        if (estudiantesPremium.isEmpty()) {
+            System.out.println("No se han cargado estudiantes.");
+            return -1;
+        } else {
+            System.out.println("Archivo cargado correctamente.");
+        }
+
+        // Buscar el estudiante por usuario y contraseña
+        for (int pos = 0; pos < estudiantesPremium.size(); pos++) {
+            Estudiante ea = estudiantesPremium.get(pos);
+            if (ea.getUsuarioGym().equals(usuario) && ea.getContraseniaGym().equals(contrasenia)) {
+                return pos; // Retorna la posición del estudiante si se encuentra
+            }
+        }
+
+        // Si no se encuentra el estudiante
+        System.out.println("No se encontró ningún estudiante Premium con el usuario o la contraseña proporcionados.");
+        return -1;
+    }*/
+    public int buscarEstudiantePremium(ArrayList<Estudiante> estudiantesPremium, String usuario, String contrasenia) {
+    if (estudiantesPremium.isEmpty()) {
+        cargarEstudiantesPremium(estudiantesPremium);
+    }
+
+    if (estudiantesPremium.isEmpty()) {
+        System.out.println("No se han cargado estudiantes.");
+        return -1;
+    } else {
+        System.out.println("Archivo cargado correctamente.");
+    }
+
+    // Limpiar espacios en blanco de usuario y contraseña ingresados
+    usuario = usuario.trim();
+    contrasenia = contrasenia.trim();
+
+    for (int pos = 0; pos < estudiantesPremium.size(); pos++) {
+        Estudiante ea = estudiantesPremium.get(pos);
+        // Comparar sin espacios adicionales
+        if (ea.getUsuarioGym().trim().equals(usuario) && ea.getContraseniaGym().trim().equals(contrasenia)) {
+            return pos; // Retorna la posición si se encuentra
+        }
+    }
+
+    System.out.println("No se encontró ningún estudiante Premium con el usuario o la contraseña proporcionados.");
+    return -1;
+}
+
+
+
+   //------------------------------------------------------------------------------------------------
+   
+    
     
     public static void imprimirTabla(String[][] data) {
     // Incrementa el tamaño de las columnas para que puedan acomodar más caracteres
@@ -348,4 +461,3 @@ public static void imprimirSeparador(int anchoColumna1, int anchoColumna2) {
 }
 
 }
-

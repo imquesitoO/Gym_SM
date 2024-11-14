@@ -1,13 +1,15 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public interface Manejo_Archivos {
     
-    String FREE_FILE_PATH = "C:\\Users\\valer\\OneDrive\\Escritorio\\4TO CICLO\\JAVA EN vs\\NEATBEANS\\Neatbeans\\src\\main\\resources\\com\\mycompany\\Gimnasio\\EstudianteFree.txt";
+    String FREE_FILE_PATH = "EstudianteFree.txt";
 
-    String PREMIUM_FILE_PATH = "C:\\Users\\valer\\OneDrive\\Escritorio\\4TO CICLO\\JAVA EN vs\\NEATBEANS\\Neatbeans\\src\\main\\resources\\com\\mycompany\\Gimnasio\\EstudiantesPremium.txt";
+    String PREMIUM_FILE_PATH = "EstudiantesPremium.txt";
     
 
+// Cargar estudiantes Free desde el archivo
 default void cargarEstudiantesFree(ArrayList<Estudiante> estudiantes) {
     File file = new File(FREE_FILE_PATH);
     if (file.exists()) {
@@ -16,11 +18,12 @@ default void cargarEstudiantesFree(ArrayList<Estudiante> estudiantes) {
             while ((line = reader.readLine()) != null) {
                 String[] datos = line.split(",");
                 if (datos.length == 9) {
-                    Estudiante estudiante = new Estudiante(
+                    // Cambia a EstudianteFree para crear instancias correctas de estudiantes Free
+                    EstudianteFree estudianteFree = new EstudianteFree(
                         datos[0], datos[1], Long.parseLong(datos[2]), Integer.parseInt(datos[3]),
-                        datos[4], datos[5], "GRATUITO", datos[7], datos[8]
+                        datos[4], datos[5], datos[6], datos[7], datos[8]
                     );
-                    estudiantes.add(estudiante);
+                    estudiantes.add(estudianteFree); // Agrega el objeto EstudianteFree a la lista
                 }
             }
         } catch (IOException e) {
@@ -39,8 +42,8 @@ default void cargarEstudiantesFree(ArrayList<Estudiante> estudiantes) {
             if (estudiante instanceof EstudianteFree) {
                 EstudianteFree est = (EstudianteFree) estudiante;
                 // Escribir los datos solo si no existen ya en el archivo
-                if (!existeEstudiante(est)) {  // Método para verificar si ya existe
-                     writer.newLine();
+                if (!existeEstudiante(est)) {  // Método para verificar si ya existe   
+                writer.newLine(); // Otro salto de línea
                     writer.write(est.getNombres() + "," + est.getApellidos() + "," + est.getDni() + ","
                             + est.getEdad() + "," + est.getCodigoEstudiante() + "," + est.getFacultad() + ","
                             + est.getMembresia() + "," + est.getUsuarioGym() + "," + est.getContraseniaGym());
@@ -188,7 +191,7 @@ default void cargarEstudiantesFree(ArrayList<Estudiante> estudiantes) {
     
    
  // Cargar estudiantes Premium desde el archivo
-    default void cargarEstudiantesPremium(ArrayList<Estudiante> estudiantes) {
+default void cargarEstudiantesPremium(ArrayList<Estudiante> estudiantes) {
     File file = new File(PREMIUM_FILE_PATH);
     if (file.exists()) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -196,11 +199,12 @@ default void cargarEstudiantesFree(ArrayList<Estudiante> estudiantes) {
             while ((line = reader.readLine()) != null) {
                 String[] datos = line.split(",");
                 if (datos.length == 9) {
-                    Estudiante estudiante = new Estudiante(
+                    // Cambia a EstudiantePremium para crear instancias correctas de estudiantes Premium
+                    EstudiantePremium estudiantePremium = new EstudiantePremium(
                         datos[0], datos[1], Long.parseLong(datos[2]), Integer.parseInt(datos[3]),
-                        datos[4], datos[5], "PREMIUM", datos[7], datos[8]
+                        datos[4], datos[5], datos[6], datos[7], datos[8]
                     );
-                    estudiantes.add(estudiante);
+                    estudiantes.add(estudiantePremium); // Agrega el objeto EstudiantePremium a la lista
                 }
             }
         } catch (IOException e) {
@@ -208,9 +212,11 @@ default void cargarEstudiantesFree(ArrayList<Estudiante> estudiantes) {
         }
     } else {
         System.out.println("Archivo no encontrado en: " + PREMIUM_FILE_PATH);
-        }
     }
+}
 
+    
+    
     // Agregar estudiantes Premium asegurando no duplicar
     default void agregar_estudiantePremium(ArrayList<Estudiante> estudiantes) {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(PREMIUM_FILE_PATH, true))) {  // true para no sobrescribir
@@ -219,7 +225,7 @@ default void cargarEstudiantesFree(ArrayList<Estudiante> estudiantes) {
                 EstudiantePremium est = (EstudiantePremium) estudiante;
                 // Escribir los datos solo si no existen ya en el archivo
                 if (!existeEstudiantePremium(est)) {  // Método para verificar si ya existe
-                     writer.newLine();
+                    writer.newLine(); // Otro salto de línea
                     writer.write(est.getNombres() + "," + est.getApellidos() + "," + est.getDni() + ","
                             + est.getEdad() + "," + est.getCodigoEstudiante() + "," + est.getFacultad() + ","
                             + est.getMembresia() + "," + est.getUsuarioGym() + "," + est.getContraseniaGym());
@@ -357,5 +363,5 @@ default void cargarEstudiantesFree(ArrayList<Estudiante> estudiantes) {
         System.out.println("Error al actualizar el archivo Premium después de eliminar estudiantes: " + e.getMessage());
         }
     }
-   
+ 
 }

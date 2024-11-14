@@ -117,8 +117,8 @@ public class Entrenador extends Persona implements Manejo_Archivos,Salida {
         if ("PREMIUM".equals(e.getMembresia())) {
             String[][] data = {
                 {"Dato", "Informacion"},
-                {"Nombre", quitarEspacio(e.getNombres())},
-                {"Apellidos", quitarEspacio(e.getApellidos())}
+                {"Nombre", agregarEspacio(e.getNombres())},
+                {"Apellidos", agregarEspacio(e.getApellidos())}
             };
             imprimirTabla(data);
         }

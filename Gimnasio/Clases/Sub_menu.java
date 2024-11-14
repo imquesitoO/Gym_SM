@@ -7,7 +7,7 @@ public class Sub_menu {
         System.out.println("\tBIENVENIDO AL SMFit");
         System.out.println("\n[1] Administrador");
         System.out.println("[2] Entrenador");
-        System.out.println("[3] Estudiante");
+        System.out.println("[3] Estudiante Free");
         System.out.println("[4] Estudiante Premium");
         System.out.println("[5] Salir");
         System.out.print("Seleccione una opcion: ");
@@ -30,7 +30,7 @@ public class Sub_menu {
     }
 
     public static int submenu_entrenador() {
-        System.out.println("\n[1] Mostrar lista de Estudiantes Premium asignados");
+        System.out.println("[1] Mostrar lista de Estudiantes Premium asignados");
         System.out.println("[2] Regresar");
         System.out.print("Seleccione una opcion: ");
         int opc2 = consola.nextInt();
@@ -38,18 +38,22 @@ public class Sub_menu {
         return opc2;
     }
 
-    public static int submenu_estudianteFree() {
-        System.out.println("\n[1] Reservar turno");
-        System.out.println("[2] Ver turno reservado");
-        System.out.println("[3] Regresar");
-        System.out.print("Seleccione una opcion: ");
-        int opc3 = consola.nextInt();
-        consola.nextLine(); // Limpiar el buffer
-        return opc3;
-    }
+public static int submenu_estudianteFree() {
+    Scanner consola = new Scanner(System.in); // Asegúrate de que el Scanner esté correctamente inicializado
+
+    System.out.println("[1] Reservar turno");
+    System.out.println("[2] Ver turno reservado");
+    System.out.println("[3] Regresar");
+    System.out.print("Seleccione una opcion: ");
+    
+    int opc3 = consola.nextInt(); // Leer la opción seleccionada
+    consola.nextLine(); // Limpiar el buffer
+    return opc3;
+}
+
 
     public static int submenu_estudiantePremium() {
-        System.out.println("\n[1] Reservar turno");
+        System.out.println("[1] Reservar turno");
         System.out.println("[2] Ver turno reservado");
         System.out.println("[3] Mostrar entrenadores");
         System.out.println("[4] Regresar");

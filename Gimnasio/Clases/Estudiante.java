@@ -1,10 +1,6 @@
 import java.io.*;
 
-/**
- *
- * @author valer
- */
-public class Estudiante extends Persona implements Serializable {
+public class Estudiante extends Persona implements Serializable,Manejo_Archivos {
     
      protected String codigoEstudiante;
     protected String facultad;
@@ -81,4 +77,5 @@ public class Estudiante extends Persona implements Serializable {
            contraseniaGym + ',' +
            membresia + ',';
     }
+
 }

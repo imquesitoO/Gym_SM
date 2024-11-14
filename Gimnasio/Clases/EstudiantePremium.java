@@ -1,3 +1,5 @@
+import static com.mycompany.Gimnasio.Entrenador.imprimirTabla;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class EstudiantePremium extends Estudiante {
@@ -35,29 +37,6 @@ public class EstudiantePremium extends Estudiante {
     }
 
     // Método para iniciar sesión
-    public boolean iniciar_sesion_estudiantepremium(int intento) {
-        Scanner consola = new Scanner(System.in);
-
-        System.out.println("\n**********************************************");
-        System.out.println("\t\tIniciar Sesión ");
-
-        System.out.print("\n\tUsuario: ");
-        String usuario1 = consola.nextLine();
-
-        System.out.print("\n\tContraseña: ");
-        String contrasenia1 = consola.nextLine();
-
-        if (this.usuarioGym.equals(usuario1) && this.contraseniaGym.equals(contrasenia1)) {
-            System.out.println("\nInicio de sesión exitoso.");
-            System.out.println("\tBIENVENIDO ESTUDIANTE PREMIUM");
-            return true;
-        } else {
-            intento--;
-            System.out.println("\nUsuario y/o clave incorrectos");
-            System.out.println("Le quedan " + intento + " intentos.");
-            return false;
-        }
-    }
 
     // Método para mostrar datos
     @Override
@@ -71,7 +50,20 @@ public class EstudiantePremium extends Estudiante {
             {"Membresía", "PREMIUM"}
         };
         imprimirTabla(data);
+        System.out.println("Recordar: Pago membresia Premium 15 soles");
     }
+    
+     public void mostrarEntrenadores(Entrenador[] entrenadores) {
+
+    // Mostrar solo estudiantes PREMIUM.
+    for (Entrenador e : entrenadores) {
+            String[][] data = {
+                {"Dato", "Informacion"},
+                {"Nombre", e.getNombres()},
+                {"Apellidos",e.getApellidos()}};
+            imprimirTabla(data);
+       }
+}
 
     // Método para imprimir tabla
     public static void imprimirTabla(String[][] data) {
