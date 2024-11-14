@@ -1,4 +1,4 @@
-Valeria_Alexandra,Flores_Cortez,70768911,20,23200024,Ingenieria_de_Sistemas,PREMIUM,ValeriaFlores,Valeria24	
-Yajhaira_Dayana,Santos_Siguenza,70768910,20,23200061,Ingenieria_de_Sistemas,PREMIUM,DayanaSantos,Yajhaira61 	
-Keyla_Noemi,Sihuacollo_Sierra,70768912,19,23200062,Ingenieria_de_Sistemas,PREMIUM,KeylaSihuacollo,Keyla62
-Emily_Andre,Cerna_Aguilar,70768913,19,23200153,Ingenieria_de_Sistemas,PREMIUM,EmilyCerna,Emily153
+Valeria_Alexandra,Flores_Cortez,70768921,20,23210124,Ingenieria_de_Sistemas,PREMIUM,ValeriaFlores,Valeria24	
+Yajhaira_Dayana,Santos_Siguenza,70768910,20,23210161,Ingenieria_de_Sistemas,PREMIUM,DayanaSantos,Yajhaira61 	
+Keyla_Noemi,Sihuacollo_Sierra,70768912,19,23210162,Ingenieria_de_Sistemas,PREMIUM,KeylaSihuacollo,Keyla62
+Emily_Andre,Cerna_Aguilar,70768913,19,23210153,Ingenieria_de_Sistemas,PREMIUM,EmilyCerna,Emily153
