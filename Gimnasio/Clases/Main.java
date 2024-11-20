@@ -14,6 +14,18 @@ public class Main implements Manejo_Archivos{
         ArrayList<Estudiante> estudiantesFree = new ArrayList<>();
         ArrayList<Estudiante> estudiantesPremium = new ArrayList<>();
         
+      administrador.cargarEstudiantesFree(estudiantesFree);
+      administrador.cargarEstudiantesPremium(estudiantesPremium);
+      
+        if (estudiantesFree.isEmpty()) {
+         System.out.println("No se encontraron estudiantes Free.");
+        }
+
+        if (estudiantesPremium.isEmpty()) {
+        System.out.println("No se encontraron estudiantes Premium.");
+        }
+
+      
       
         TurnoFree.inicializarTurnos();
         TurnoPremium.inicializarTurnos();
@@ -82,26 +94,15 @@ public class Main implements Manejo_Archivos{
                     boolean ingresado = false;
                     int intento = 3;
                     EstudianteFree estudianteActivo = null;
-
+                    
                     do {
-                        System.out.println("\n**********************************************");
-                        System.out.println("\t\tIniciar Sesion ");
-                        System.out.print("\n\tUsuario: ");
-                        String usuario1 = scanner.nextLine();
-                        System.out.print("\n\tContrasenia: ");
-                        String contrasenia1 = scanner.nextLine();
-
-                        if (estudiantesFree.isEmpty()) {
-                            int pos = administrador.buscarEstudianteFree(estudiantesFree, usuario1, contrasenia1);
-                            if (pos != -1) {
-                                estudianteActivo = (EstudianteFree) estudiantesFree.get(pos);
-                            }
-                        } else {
                             for (Estudiante e : estudiantesFree) {
-                                if (e instanceof EstudianteFree && e.getContraseniaGym().equals(contrasenia1) && e.getUsuarioGym().equals(usuario1)) {
+                                if (e instanceof EstudianteFree) {
+                                ingresado = ((EstudianteFree) e).iniciar_sesion_estudiantefree(intento);
+                                if (ingresado) {
                                     estudianteActivo = (EstudianteFree) e;
                                     break;
-                                }
+                                }                          
                             }
                         }
 
@@ -141,37 +142,28 @@ public class Main implements Manejo_Archivos{
                     int intento = 3;
                     EstudiantePremium estudianteActivo = null;
 
-                    do {
-                        System.out.println("\n**********************************************");
-                        System.out.println("\t\tIniciar Sesion ");
-                        System.out.print("\n\tUsuario: ");
-                        String usuario = scanner.nextLine();
-                        System.out.print("\n\tContrasenia: ");
-                        String contrasenia = scanner.nextLine();
-
-                        if (estudiantesPremium.isEmpty()) {
-                            int pos = administrador.buscarEstudiantePremium(estudiantesPremium, usuario, contrasenia);
-                            if (pos != -1) {
-                                estudianteActivo = (EstudiantePremium) estudiantesPremium.get(pos);
-                            }
-                        } else {
+                     do {
                             for (Estudiante e : estudiantesPremium) {
-                                if (e instanceof EstudiantePremium && e.getContraseniaGym().equals(contrasenia) && e.getUsuarioGym().equals(usuario)) {
+                                if (e instanceof EstudiantePremium) {
+                                ingresado = ((EstudiantePremium) e).iniciar_sesion_estudiantepremium(intento);
+                                if (ingresado) {
                                     estudianteActivo = (EstudiantePremium) e;
                                     break;
-                                }
+                                }                          
                             }
                         }
 
-                        if (estudianteActivo == null) {
-                            System.out.println("Estudiante Premium no encontrado.");
-                            intento--;
-                            if (intento > 0) {
-                                System.out.println("Intentos restantes: " + intento);
-                            }
+                        if (!ingresado) {
+                                estudianteActivo = null; // Restablece a null si no se encuentra
+                                intento--;
+                                System.out.println("Estudiante no encontrado.");
+                                if (intento > 0) {
+                                    System.out.println("Intentos restantes: " + intento);
+                                }
+
                         } else {
-                            System.out.println("\nInicio de sesion exitoso.");
-                            System.out.println("\n\tBIENVENIDO ESTUDIANTE PREMIUM\n");
+                            System.out.println("\nInicio de sesion exitoso.\n\n");
+                            System.out.println("\tBIENVENIDO ESTUDIANTE FREE");
                             ingresado = true;
                             break;
                         }

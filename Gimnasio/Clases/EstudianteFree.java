@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,7 +8,34 @@ public class EstudianteFree extends Estudiante {
     public EstudianteFree(String nombres, String apellidos, long dni, int edad, String codigoEstudiante, String facultad, String membresia, String usuarioGym, String contraseniaGym) {
         super(nombres, apellidos, dni, edad, codigoEstudiante, facultad, "GRATUITO", usuarioGym, contraseniaGym);
     }
+    
+    public boolean iniciar_sesion_estudiantefree(int intento) {
+        String usuario1;
+        String contrasenia1;
+        Scanner consola = new Scanner(System.in);
 
+
+        System.out.println("\n**********************************************");
+        System.out.println("\t\tIniciar Sesion ");
+        
+        System.out.print("\n\tUsuario: ");
+        usuario1 = consola.nextLine();
+        
+        System.out.print("\n\tContrasenia: ");
+        contrasenia1 = consola.nextLine();
+    
+        if (this.usuarioGym.equals(usuario1) && this.contraseniaGym.equals(contrasenia1)) {
+            System.out.println("\nInicio de sesion exitoso.");
+            System.out.println("\tBIENVENIDO ESTUDIANTE FREE");
+            return true;
+        } else {
+            intento--;
+            System.out.println("\nUsuario y/o clave incorrectos");
+            System.out.println("Le quedan " + intento + " intentos.");
+            return false;
+        }
+    }
+    
     // Método para reservar turno
     public void reservarTurno() {
         Scanner scanner = new Scanner(System.in);

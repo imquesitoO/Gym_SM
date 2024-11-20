@@ -9,12 +9,37 @@ public class EstudiantePremium extends Estudiante {
     public EstudiantePremium(String nombres, String apellidos, long dni, int edad, String codigoEstudiante, String facultad, String membresia, String usuarioGym, String contraseniaGym) {
         super(nombres, apellidos, dni, edad, codigoEstudiante, facultad,"PREMIUM", usuarioGym, contraseniaGym);
     }
+    
+    
+     public boolean iniciar_sesion_estudiantepremium(int intento) {
+        Scanner consola = new Scanner(System.in);
+
+        System.out.println("\n**********************************************");
+        System.out.println("\t\tIniciar Sesion ");
+
+        System.out.print("\n\tUsuario: ");
+        String usuario1 = consola.nextLine();
+
+        System.out.print("\n\tContrasenia: ");
+        String contrasenia1 = consola.nextLine();
+
+        if (this.usuarioGym.equals(usuario1) && this.contraseniaGym.equals(contrasenia1)) {
+            System.out.println("\nInicio de sesion exitoso.");
+            System.out.println("\tBIENVENIDO ESTUDIANTE PREMIUM");
+            return true;
+        } else {
+            intento--;
+            System.out.println("\nUsuario y/o clave incorrectos");
+            System.out.println("Le quedan " + intento + " intentos.");
+            return false;
+        }
+    }
 
     // Método para reservar turno
     public void reservarTurno() {
         Scanner scanner = new Scanner(System.in);
         TurnoPremium.mostrarTurnos();
-        System.out.print("Seleccione el turno (número): ");
+        System.out.print("Seleccione el turno (numero): ");
         int opcion = scanner.nextInt();
         turnoReservado = TurnoPremium.seleccionarTurno(opcion);
         if (turnoReservado != null) {
@@ -42,10 +67,10 @@ public class EstudiantePremium extends Estudiante {
     @Override
     public void mostrarDatos() {
         String[][] data = {
-            {"Dato", "Información"},
+            {"Dato", "Informacion"},
             {"Nombre", getNombres()},
             {"Apellidos", getApellidos()},
-            {"Código", getCodigoEstudiante()},
+            {"Codigo", getCodigoEstudiante()},
             {"Facultad", getFacultad()},
             {"Membresía", "PREMIUM"}
         };
