@@ -34,6 +34,6 @@ Este proyecto es un **Sistema de Gestión de Gimnasio** desarrollado en Java, di
 - **IDE**: Cualquier entorno de desarrollo compatible con Java (Eclipse, IntelliJ, NetBeans, etc.)
 
 ## Ejecución del Proyecto
-
 1. Clonar este repositorio:
-   ```bash git clone https://github.com/imquesitoO/Gym_SM.git
+```bash
+   git clone https://github.com/imquesitoO/Gym_SM.git
